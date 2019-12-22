@@ -53,13 +53,17 @@ class QaListTileState extends State<QaListTile> {
 
   final _random = new Random();
   String _qaText = '';
-  int _idx = 0;
+  int _q_idx = 0;
+  int _a_idx = 0;
   bool _q = true;
+  List<String> _questions = new List.of(questions);
+  List<String> _answers = new List.of(answers);
+  
   
   Widget _buildRow() {
     return FractionallySizedBox(
       // widthFactor: 0.7,
-      heightFactor: 1.2,
+      heightFactor: 1,
       child: Card(
         child: ListTile(
           leading: Icon(
@@ -77,26 +81,37 @@ class QaListTileState extends State<QaListTile> {
           ),
           title: Text(_q ? 'Ответ' : 'Вопрос', style: TextStyle(fontSize: 20.0)),
           subtitle: Text(_qaText, style: TextStyle(fontSize: 18.0)),
-          onTap: () {
-            setState(() {
-              if (_q){
-                _idx = _random.nextInt(questions.length - 1);
-                _qaText = questions.elementAt(_idx);
-              } else {
-                _idx = _random.nextInt(answers.length - 1);
-                _qaText = answers.elementAt(_idx);
-              }
-              _q = !_q;
-            });
-          }
         ),
       ),
     );
   }
 
   Widget build(BuildContext context) {
+    _questions.shuffle(_random);
+    _answers.shuffle(_random);
     return Scaffold(
-        body: _buildRow(),
+        body: PageView.builder(
+          itemBuilder: (context, position) {
+              if (_q){
+                _q_idx += 1; //_random.nextInt(questions.length - 1);
+                if (_q_idx == _questions.length){
+                  _q_idx = 0;
+                  _questions.shuffle(_random);
+                }
+                _qaText = _questions.elementAt(_q_idx);
+              } else {
+                _a_idx += 1; //_random.nextInt(answers.length - 1);
+                if (_a_idx == _answers.length){
+                  _a_idx = 0;
+                  _answers.shuffle(_random);
+                }
+                _qaText = _answers.elementAt(_a_idx);
+              }
+              print(position);
+              _q = !_q;
+            return _buildRow();
+          },
+        )
     );
   }
 } 
