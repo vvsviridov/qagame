@@ -1,9 +1,3 @@
-// Flutter code sample for Card
-
-// This sample shows creation of a [Card] widget that can be tapped. When
-// tapped this [Card]'s [InkWell] displays an "ink splash" that fills the
-// entire card.
-
 import 'package:flutter/material.dart';
 import 'answers.dart';
 import 'questions.dart';
@@ -12,7 +6,6 @@ import 'dart:math';
 
 void main() => runApp(MyApp());
 
-/// This Widget is the main application widget.
 class MyApp extends StatelessWidget {
   static const String _title = 'Вопрос-Ответ';
 
@@ -59,10 +52,8 @@ class QaListTileState extends State<QaListTile> {
   List<String> _questions = new List.of(questions);
   List<String> _answers = new List.of(answers);
   
-  
   Widget _buildRow() {
     return Container(
-      // heightFactor: 1,
       child: Card(
         child: ListTile(
           leading: Icon(
