@@ -35,7 +35,7 @@ class MyStatelessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height*0.75,
         child: QaListTile(),
       ),
     );
@@ -53,17 +53,16 @@ class QaListTileState extends State<QaListTile> {
 
   final _random = new Random();
   String _qaText = '';
-  int _q_idx = 0;
-  int _a_idx = 0;
+  int _qIdx = 0;
+  int _aIdx = 0;
   bool _q = true;
   List<String> _questions = new List.of(questions);
   List<String> _answers = new List.of(answers);
   
   
   Widget _buildRow() {
-    return FractionallySizedBox(
-      // widthFactor: 0.7,
-      heightFactor: 1,
+    return Container(
+      // heightFactor: 1,
       child: Card(
         child: ListTile(
           leading: Icon(
@@ -93,21 +92,20 @@ class QaListTileState extends State<QaListTile> {
         body: PageView.builder(
           itemBuilder: (context, position) {
               if (_q){
-                _q_idx += 1; //_random.nextInt(questions.length - 1);
-                if (_q_idx == _questions.length){
-                  _q_idx = 0;
+                _qIdx += 1;
+                if (_qIdx == _questions.length){
+                  _qIdx = 0;
                   _questions.shuffle(_random);
                 }
-                _qaText = _questions.elementAt(_q_idx);
+                _qaText = _questions.elementAt(_qIdx);
               } else {
-                _a_idx += 1; //_random.nextInt(answers.length - 1);
-                if (_a_idx == _answers.length){
-                  _a_idx = 0;
+                _aIdx += 1;
+                if (_aIdx == _answers.length){
+                  _aIdx = 0;
                   _answers.shuffle(_random);
                 }
-                _qaText = _answers.elementAt(_a_idx);
+                _qaText = _answers.elementAt(_aIdx);
               }
-              print(position);
               _q = !_q;
             return _buildRow();
           },
