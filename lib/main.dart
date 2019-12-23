@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
+        appBar: AppBar(title: const Text(_title, style: TextStyle(fontSize: 26),)),
         body: MyStatelessWidget(),
       ),
     );
@@ -53,25 +53,23 @@ class QaListTileState extends State<QaListTile> {
   List<String> _answers = new List.of(answers);
   
   Widget _buildRow() {
-    return Container(
-      child: Card(
-        child: ListTile(
-          leading: Icon(
-            IconData(
-              myicons.elementAt(_random.nextInt(myicons.length - 1)),
-              fontFamily: 'MaterialIcons'
-            ),
-            size: 36,
-            color: Color.fromRGBO(
-              _random.nextInt(256),
-              _random.nextInt(256),
-              _random.nextInt(256),
-              100
-            ),
+    return Card(
+      child: ListTile(
+        leading: Icon(
+          IconData(
+            myicons.elementAt(_random.nextInt(myicons.length - 1)),
+            fontFamily: 'MaterialIcons'
           ),
-          title: Text(_q ? 'Ответ' : 'Вопрос', style: TextStyle(fontSize: 20.0)),
-          subtitle: Text(_qaText, style: TextStyle(fontSize: 18.0)),
+          size: 36,
+          color: Color.fromRGBO(
+            _random.nextInt(256),
+            _random.nextInt(256),
+            _random.nextInt(256),
+            100
+          ),
         ),
+        title: Text(_q ? 'Ответ' : 'Вопрос', style: TextStyle(fontSize: 26.0)),
+        subtitle: Text(_qaText, style: TextStyle(fontSize: 22.0)), 
       ),
     );
   }
@@ -80,27 +78,27 @@ class QaListTileState extends State<QaListTile> {
     _questions.shuffle(_random);
     _answers.shuffle(_random);
     return Scaffold(
-        body: PageView.builder(
-          itemBuilder: (context, position) {
-              if (_q){
-                _qIdx += 1;
-                if (_qIdx == _questions.length){
-                  _qIdx = 0;
-                  _questions.shuffle(_random);
-                }
-                _qaText = _questions.elementAt(_qIdx);
-              } else {
-                _aIdx += 1;
-                if (_aIdx == _answers.length){
-                  _aIdx = 0;
-                  _answers.shuffle(_random);
-                }
-                _qaText = _answers.elementAt(_aIdx);
-              }
-              _q = !_q;
-            return _buildRow();
-          },
-        )
+      body: PageView.builder(
+        itemBuilder: (context, position) {
+          if (_q){
+            _qIdx += 1;
+            if (_qIdx == _questions.length){
+              _qIdx = 0;
+              _questions.shuffle(_random);
+            }
+            _qaText = _questions.elementAt(_qIdx);
+          } else {
+            _aIdx += 1;
+            if (_aIdx == _answers.length){
+              _aIdx = 0;
+              _answers.shuffle(_random);
+            }
+            _qaText = _answers.elementAt(_aIdx);
+          }
+          _q = !_q;
+          return _buildRow();
+        },
+      )
     );
   }
 } 
