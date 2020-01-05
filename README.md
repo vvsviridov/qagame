@@ -6,3 +6,4 @@ A new Flutter project.
 
 Вариант известной игры для смартфонов
 
+[Web версия игры на netlify](https://ecstatic-ardinghelli-9f8266.netlify.com/)
